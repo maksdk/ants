@@ -5,7 +5,7 @@ export class NullState extends AbstractState {
         super(name, fsm);
     }
 
-    onEnterState(): void {
+    onEnterState(): never {
         throw new Error(`${this.name} state was not fund, NullState was used`);
     }
     onExitState(onFinish: () => void): never {
