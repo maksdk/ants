@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 
 #local folder for temp projects, basically it is a 'dist' folder
 dist
+=======
+#local folder for temp projects, basically it is a 'dist' folder
+dist
+coverage
+>>>>>>> Add new builerplate files
 assets/assets.json
 
 #node modules
@@ -13,9 +19,17 @@ yarn-error.log*
 
 # Editor directories and files
 .idea
+<<<<<<< HEAD
 .vscode
+=======
+>>>>>>> Add new builerplate files
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
+=======
+.cache
+.env
+>>>>>>> Add new builerplate files

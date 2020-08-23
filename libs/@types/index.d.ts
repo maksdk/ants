@@ -14,7 +14,7 @@ declare namespace FSM {
         name: string;
         fsm: IStateMachine;
         onEnterState: () => void;
-        onExitState: (onFinish: Function) => void;
+        onExitState: (onFinish: () => void) => void;
     }
 }
 

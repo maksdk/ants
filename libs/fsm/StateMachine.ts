@@ -22,8 +22,7 @@ export class StateMachine<T> implements FSM.IStateMachine {
 
         if (this.currentState) {
             this.currentState.onExitState(onExitFinished);
-        }
-        else {
+        } else {
             onExitFinished();
         }
     }
@@ -50,8 +49,11 @@ export class StateMachine<T> implements FSM.IStateMachine {
     }
 
     static log(currState?: FSM.IState, previousState?: FSM.IState): void {
-        console.log(`%c State was change!
+        console.log(
+            `%c State was change!
             previous state: ${previousState && previousState.name}
-            current state: ${currState && currState.name}`, 'color: white; background: black; font-size: 15px');
+            current state: ${currState && currState.name}`,
+            "color: white; background: black; font-size: 15px"
+        );
     }
 }

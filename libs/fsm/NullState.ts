@@ -8,7 +8,7 @@ export class NullState extends AbstractState {
     onEnterState(): void {
         throw new Error(`${this.name} state was not fund, NullState was used`);
     }
-    onExitState(onFinish: Function): void {
+    onExitState(onFinish: () => void): never {
         throw new Error("Method not implemented.");
     }
 }

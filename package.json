@@ -1,36 +1,95 @@
 {
-  "name": "game-boilerplate",
-  "version": "1.0.0",
-  "description": "Boilerplate for games using TS and pixi.js",
-  "scripts": {
-    "tsc-compile": "tsc -w -p tsconfig.json",
-    "start-dev": "npm run collect-assets && npm run webpack-prod && npm run webpack-dev",
-    "---- Use commands above ----": "",
-    "webpack-dev": "webpack-dev-server --config webpack.config.dev.js",
-    "webpack-prod": "webpack --config webpack.config.prod.js",
-    "collect-assets": "node ./assetsCollector.js",
-    "tsc-init": "tsc --init"
-  },
-  "repository": {},
-  "sub-repositories": [],
-  "author": "Yurii Husak",
-  "license": "MIT",
-  "bugs": {},
-  "homepage": "",
-  "dependencies": {
-    "@tweenjs/tween.js": "^18.5.0",
-    "pixi.js": "^5.3.3"
-  },
-  "devDependencies": {
-    "@types/pixi.js": "^5.0.0",
-    "@types/tween.js": "^18.5.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
-    "html-webpack-plugin": "^4.2.0",
-    "ts-loader": "^8.0.2",
-    "typescript": "^3.9.7",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
-  }
+    "name": "game-boilerplate",
+    "version": "1.0.0",
+    "description": "Boilerplate for Game using PIXI.js and TS",
+    "scripts": {
+        "webpack": "webpack",
+        "webpack-dev-server": "webpack-dev-server --hot --open",
+        "build": "npx del-cli dist --force  && npm run webpack -- --env.mode production",
+        "dev": "npm run webpack-dev-server -- --env.mode development --watch",
+        "test": "npx jest",
+        "code-coverage": "jest --coverage",
+        "prettier": "npx prettier",
+        "prettier:format": "npm run prettier -- --write src/**/*.ts",
+        "prettier:check": "npm run prettier -- -c ./src/**/*.ts",
+        "lint-check": "npx eslint ./src/**/*.ts",
+        "code-style-check": "npm run lint-check && npm run prettier:check",
+        "collect-assets": "node ./assetsCollector.js"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "core-js": "^3.6.5",
+        "pixi.js": "^5.3.3"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.11.4",
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/plugin-proposal-decorators": "^7.10.5",
+        "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+        "@babel/plugin-transform-runtime": "^7.11.0",
+        "@babel/preset-env": "^7.11.0",
+        "@babel/preset-typescript": "^7.10.4",
+        "@babel/runtime": "^7.11.2",
+        "@types/copy-webpack-plugin": "^6.0.0",
+        "@types/html-webpack-plugin": "^3.2.3",
+        "@types/jest": "^26.0.10",
+        "@types/mini-css-extract-plugin": "^0.9.1",
+        "@types/node": "^14.6.0",
+        "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
+        "@types/pixi.js": "^5.0.0",
+        "@types/terser-webpack-plugin": "^4.1.0",
+        "@types/webpack": "^4.41.21",
+        "@types/webpack-dev-server": "^3.11.0",
+        "@types/webpack-merge": "^4.1.5",
+        "@typescript-eslint/eslint-plugin": "^3.9.1",
+        "@typescript-eslint/parser": "^3.9.1",
+        "babel-loader": "^8.1.0",
+        "babel-register": "^6.26.0",
+        "copy-webpack-plugin": "^6.0.3",
+        "css-loader": "^4.2.1",
+        "del-cli": "^3.0.1",
+        "eslint": "^7.7.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-prettier": "^3.1.4",
+        "fork-ts-checker-notifier-webpack-plugin": "^3.0.0",
+        "fork-ts-checker-webpack-plugin": "^5.1.0",
+        "html-webpack-plugin": "^4.3.0",
+        "husky": "^4.2.5",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^26.4.1",
+        "jest-canvas-mock": "^2.2.0",
+        "jsdom": "^16.4.0",
+        "mini-css-extract-plugin": "^0.10.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.3",
+        "prettier": "^2.0.5",
+        "pretty-quick": "^3.0.0",
+        "terser-webpack-plugin": "^4.1.0",
+        "ts-jest": "^26.2.0",
+        "ts-loader": "^8.0.2",
+        "ts-node": "^8.10.2",
+        "typescript": "^3.9.7",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0",
+        "webpack-merge": "^5.1.2"
+    },
+    "jest": {
+        "transform": {
+            ".(ts|tsx)": "ts-jest"
+        },
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js"
+        ],
+        "moduleNameMapper": {
+            ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+        },
+        "setupFiles": [
+            "jest-canvas-mock"
+        ]
+    }
 }

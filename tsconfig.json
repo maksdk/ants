@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
+        "lib": ["dom","es2015"],
+        "strict": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "importsNotUsedAsValues": "preserve",
+        "resolveJsonModule": true,
+        "types": ["pixi.js", "./libs/@types/"]
+    },
+    "include": ["./src/index.ts"]
+}
