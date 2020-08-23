@@ -1,0 +1,36 @@
+{
+  "name": "game-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for games using TS and pixi.js",
+  "scripts": {
+    "tsc-compile": "tsc -w -p tsconfig.json",
+    "start-dev": "npm run collect-assets && npm run webpack-prod && npm run webpack-dev",
+    "---- Use commands above ----": "",
+    "webpack-dev": "webpack-dev-server --config webpack.config.dev.js",
+    "webpack-prod": "webpack --config webpack.config.prod.js",
+    "collect-assets": "node ./assetsCollector.js",
+    "tsc-init": "tsc --init"
+  },
+  "repository": {},
+  "sub-repositories": [],
+  "author": "Yurii Husak",
+  "license": "MIT",
+  "bugs": {},
+  "homepage": "",
+  "dependencies": {
+    "@tweenjs/tween.js": "^18.5.0",
+    "pixi.js": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/pixi.js": "^5.0.0",
+    "@types/tween.js": "^18.5.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "html-webpack-plugin": "^4.2.0",
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
