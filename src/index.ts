@@ -1,7 +1,6 @@
 
 import { StateMachine } from "../libs/fsm/StateMachine";
 import { Application, AnimatedSprite, Container } from "pixi.js";
-//@ts-ignore
 import assets from "../assets/assets.json";
 
 const view: HTMLCanvasElement = (document.body.querySelector("#game-canvas") as HTMLCanvasElement);
