@@ -13,7 +13,7 @@ const onAssetsLoaded = () => {
     const sprite = Sprite.from('kenny');
     app.stage.addChild(sprite);
 
-    const title = new Text('They killed kenny!!!', { fontSize: 50, fill: 0xffffff });
+    const title = new Text('They killed kenny!!!', { fontSize: 50, fill: 0xffffff, fontFamily: 'Coneria' });
     app.stage.addChild(title);
 };
 
