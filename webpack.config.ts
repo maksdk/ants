@@ -9,6 +9,7 @@ import { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CopyPlugin from "copy-webpack-plugin";
+import LodashModuleReplacementPlugin from "lodash-webpack-plugin";
 
 module.exports = (env: { mode: "development" | "production" }) => {
     const developmentMode = env.mode === "development";
@@ -43,6 +44,7 @@ module.exports = (env: { mode: "development" | "production" }) => {
         },
 
         plugins: [
+            new LodashModuleReplacementPlugin(),
             new HtmlWebpackPlugin({
                 title: "TS PIXI BOILERPLATE",
                 meta: {

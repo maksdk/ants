@@ -20,6 +20,7 @@
     "license": "MIT",
     "dependencies": {
         "core-js": "^3.6.5",
+        "lodash": "^4.17.20",
         "pixi.js": "^5.3.3"
     },
     "devDependencies": {
@@ -61,6 +62,7 @@
         "jest": "^26.4.1",
         "jest-canvas-mock": "^2.2.0",
         "jsdom": "^16.4.0",
+        "lodash-webpack-plugin": "^0.11.5",
         "mini-css-extract-plugin": "^0.10.0",
         "optimize-css-assets-webpack-plugin": "^5.0.3",
         "prettier": "^2.0.5",
