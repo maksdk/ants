@@ -1,11 +1,10 @@
-import { Application, utils } from "pixi.js";
-import has from "lodash/has";
-import FontFaceObserver from "fontfaceobserver";
+import { Application, utils } from 'pixi.js';
+import has from 'lodash/has';
+import FontFaceObserver from 'fontfaceobserver';
 
-type AssetKey = "sprites" | "images" | "fonts";
+type AssetKey = 'images' | 'fonts';
 
 interface IAssets {
-    sprites?: IAssetsItem[];
     images?: IAssetsItem[];
     fonts?: IAssetsItem[];
 }
@@ -18,14 +17,12 @@ interface IAssetsItem {
 export class AssetsPreloader extends utils.EventEmitter {
     private assets: IAssets = {};
     private app: Application;
-    private options = { crossOrigin: "anonymous" };
+    private options = { crossOrigin: 'anonymous' };
     private loadedItemsCount = 0;
     private totalItemsCount = 0;
     private loadersMap = {
         images: (loader: AssetsPreloader) => loader.loadImages(),
-        sprites: (loader: AssetsPreloader) => loader.loadSprites(),
-        fonts: (loader: AssetsPreloader) => loader.loadFonts(),
-        spritesheet: () => Promise.resolve(),
+        fonts: (loader: AssetsPreloader) => loader.loadFonts()
     };
     private onCompleteCb!: () => void;
     private onProgressCb!: (progress: number) => void;
@@ -73,28 +70,12 @@ export class AssetsPreloader extends utils.EventEmitter {
         });
     }
 
-    private loadSprites(): Promise<void> {
-        const { sprites = [] } = this.assets;
-
-        sprites.forEach(({ name, url }) => {
-            if (!has(this.app.loader.resources, name)) {
-                this.app.loader.add(name, url, this.options);
-            }
-        });
-
-        this.app.loader.onProgress.add(() => this.incrementProgress());
-
-        return new Promise((resolve) => {
-            this.app.loader.load(() => resolve());
-        });
-    }
-
     private loadFonts(): Promise<void> {
         const { fonts = [] } = this.assets;
-        const container = document.getElementsByTagName("head")[0];
+        const container = document.getElementsByTagName('head')[0];
         const promises = fonts.map(({ name, url }) => {
-            const style = document.createElement("style");
-            style.type = "text/css";
+            const style = document.createElement('style');
+            style.type = 'text/css';
             style.appendChild(document.createTextNode(`@font-face { font-family:${name}; src: url(${url}); }`));
             container.appendChild(style);
 
@@ -112,7 +93,7 @@ export class AssetsPreloader extends utils.EventEmitter {
         if (this.onProgressCb) {
             const progress = Math.floor((this.loadedItemsCount / this.totalItemsCount) * 100);
             this.onProgressCb(progress);
-            this.emit("assetsPreloader:progress", progress);
+            this.emit('assetsPreloader:progress', progress);
         }
 
         if (this.loadedItemsCount === this.totalItemsCount) {
@@ -126,6 +107,6 @@ export class AssetsPreloader extends utils.EventEmitter {
 
         this.onCompleteCb && this.onCompleteCb();
         this.promiseResolveCb();
-        this.emit("assetsPreloader:complete");
+        this.emit('assetsPreloader:complete');
     }
 }
