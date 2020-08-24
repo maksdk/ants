@@ -15,17 +15,17 @@ export class GameConfig {
 
     constructor() {
         this.isDevMode = true;
-        this.prodUrl = "";
-        this.devUrl = "";
-        this.containerUiId = "#game-ui";
-        this.gameCanvasId = "#game-canvas";
-        this.containerId = "#game-container";
+        this.prodUrl = '';
+        this.devUrl = '';
+        this.containerUiId = '#game-ui';
+        this.gameCanvasId = '#game-canvas';
+        this.containerId = '#game-container';
         this.application = {
             autoDensity: true,
             backgroundColor: 0x010d21,
             width: 900,
             height: 900,
-            view: {} as HTMLCanvasElement,
+            view: {} as HTMLCanvasElement
         };
     }
 }
