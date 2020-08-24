@@ -44,13 +44,13 @@ module.exports = (env: { mode: "development" | "production" }) => {
 
         plugins: [
             new HtmlWebpackPlugin({
-                "title": "TS PIXI BOILERPLATE",
-                "meta": {
-                    "viewport": "initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no",
-                    "Content-Type": { "http-equiv": "Content-Type", "content": "text/html; charset=utf-8" }
+                title: "TS PIXI BOILERPLATE",
+                meta: {
+                    viewport: "initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no",
+                    "Content-Type": { "http-equiv": "Content-Type", content: "text/html; charset=utf-8" },
                 },
-                "filename": "index.html",
-                "template": path.resolve(__dirname, "./index.html")
+                filename: "index.html",
+                template: path.resolve(__dirname, "./index.html"),
             }),
             new CopyPlugin({
                 patterns: [
