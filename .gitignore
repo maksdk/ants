@@ -1,7 +1,7 @@
 #local folder for temp projects, basically it is a 'dist' folder
 dist
 coverage
-assets/assets.json
+assets.ts
 
 #node modules
 node_modules
