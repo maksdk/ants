@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "esnext",
         "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
-        "lib": ["dom","es2015"],
+        "lib": ["dom", "es2019"],
         "strict": true,
         "sourceMap": true,
         "esModuleInterop": true,
