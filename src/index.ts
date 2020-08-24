@@ -1,3 +1,4 @@
+import { AssetsPreloader } from "./AssetsPreloader";
 import { Application, AnimatedSprite, Container } from "pixi.js";
 import assets from "../assets/assets.json";
 
@@ -72,9 +73,12 @@ const onAssetsLoaded = () => {
     hero.position.set(200, 200);
     hero.scale.set(2);
     hero.play("right");
-
     app.stage.addChild(hero);
 };
 
-app.loader.add(assets.sprites);
-app.loader.load(onAssetsLoaded);
+const onAssetsLoadProgress = (percentProgress: number) => {
+    console.log("Progress: ", percentProgress);
+};
+
+const assetsPreloader = new AssetsPreloader(app, assets);
+assetsPreloader.load(onAssetsLoaded, onAssetsLoadProgress);
