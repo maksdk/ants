@@ -4,11 +4,9 @@
     "description": "Boilerplate for Game using PIXI.js and TS",
     "scripts": {
         "webpack": "webpack",
-        "webpack-dev-server": "webpack-dev-server --hot --open",
+        "webpack-dev-server": "webpack-dev-server",
         "build": "npx del-cli dist --force  && npm run webpack -- --env.mode production",
-        "dev": "gulp assets && npm run webpack-dev-server -- --env.mode development --watch",
-        "test": "npx jest",
-        "code-coverage": "jest --coverage",
+        "dev": "gulp assets && npm run webpack-dev-server -- --env.mode development",
         "prettier": "npx prettier",
         "prettier:format": "npm run prettier -- --write src/**/*.ts",
         "prettier:check": "npm run prettier -- -c ./src/**/*.ts",
@@ -18,7 +16,6 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "core-js": "^3.6.5",
         "fontfaceobserver": "^2.1.0",
         "lodash": "^4.17.20",
         "pixi.js": "^5.3.3"
@@ -35,7 +32,6 @@
         "@types/copy-webpack-plugin": "^6.0.0",
         "@types/fontfaceobserver": "0.0.6",
         "@types/html-webpack-plugin": "^3.2.3",
-        "@types/jest": "^26.0.10",
         "@types/lodash": "^4.14.159",
         "@types/lodash-webpack-plugin": "^0.11.4",
         "@types/mini-css-extract-plugin": "^0.9.1",
@@ -63,8 +59,6 @@
         "html-webpack-plugin": "^4.3.0",
         "husky": "^4.2.5",
         "identity-obj-proxy": "^3.0.0",
-        "jest": "^26.4.1",
-        "jest-canvas-mock": "^2.2.0",
         "jsdom": "^16.4.0",
         "lodash-webpack-plugin": "^0.11.5",
         "mini-css-extract-plugin": "^0.10.0",
@@ -73,7 +67,6 @@
         "pretty-quick": "^3.0.0",
         "terser-webpack-plugin": "^4.1.0",
         "through2": "^4.0.2",
-        "ts-jest": "^26.2.0",
         "ts-loader": "^8.0.2",
         "ts-node": "^8.10.2",
         "typescript": "^3.9.7",
@@ -81,22 +74,5 @@
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^5.1.2"
-    },
-    "jest": {
-        "transform": {
-            ".(ts|tsx)": "ts-jest"
-        },
-        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js"
-        ],
-        "moduleNameMapper": {
-            ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
-        },
-        "setupFiles": [
-            "jest-canvas-mock"
-        ]
     }
 }

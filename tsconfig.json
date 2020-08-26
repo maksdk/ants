@@ -11,5 +11,5 @@
         "resolveJsonModule": true,
         "types": ["pixi.js", "./libs/@types/"]
     },
-    "include": ["./src/index.ts"]
+    "include": ["src/**/*", "libs/**/*"]
 }
