@@ -1,71 +1,71 @@
-import * as path from "path";
-import * as webpack from "webpack";
+import * as path from 'path';
+import * as webpack from 'webpack';
 
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
-module.exports = (env: { mode: "development" | "production" }) => {
+module.exports = (env: { mode: 'development' | 'production' }) => {
     return {
         mode: env.mode,
 
         module: {
             rules: [
                 {
-                    enforce: "pre",
+                    enforce: 'pre',
                     test: /\.(js|jsx|ts|tsx)$/,
                     exclude: /node_modules/,
-                    loader: "eslint-loader",
+                    loader: 'eslint-loader',
                     options: {
                         emitError: true,
                         emitWarning: true,
                         failOnError: true,
-                        failOnWarning: true,
-                    },
+                        failOnWarning: true
+                    }
                 },
                 {
                     test: /\.(js|jsx|ts|tsx)$/,
                     use: [
                         {
-                            loader: "babel-loader",
-                        },
+                            loader: 'babel-loader'
+                        }
                     ],
-                    exclude: /node_modules/,
+                    exclude: /node_modules/
                 },
                 {
                     test: /\.tsx?$/,
-                    use: "ts-loader",
-                    exclude: /node_modules/,
-                },
-            ],
+                    use: 'ts-loader',
+                    exclude: /node_modules/
+                }
+            ]
         },
 
         output: {
-            path: path.resolve(__dirname, "dist"),
-            filename: "game.[hash].js",
-            chunkFilename: "game-library.[contenthash].js",
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'game.[hash].js',
+            chunkFilename: 'game-library.[contenthash].js'
         },
 
         plugins: [
             new MiniCssExtractPlugin({
-                filename: "[name].[hash].css",
+                filename: '[name].[hash].css'
             }),
 
             new OptimizeCssAssetsPlugin({
                 assetNameRegExp: /\.css$/i,
-                cssProcessor: require("cssnano"),
+                cssProcessor: require('cssnano'),
                 cssProcessorPluginOptions: {
-                    preset: ["default", { discardComments: { removeAll: true } }],
+                    preset: ['default', { discardComments: { removeAll: true } }]
                 },
-                canPrint: true,
+                canPrint: true
             }),
 
             new webpack.DefinePlugin({
                 PRODUCTION: JSON.stringify(true),
-                VERSION: JSON.stringify("3.0.0"), // TODO Update from package.json
+                VERSION: JSON.stringify('3.0.0') // TODO Update from package.json
             }),
 
-            new webpack.ProgressPlugin(),
+            new webpack.ProgressPlugin()
         ],
 
         optimization: {
@@ -76,10 +76,10 @@ module.exports = (env: { mode: "development" | "production" }) => {
                         mangle: true,
                         toplevel: true,
                         keep_classnames: false,
-                        keep_fnames: true,
-                    },
-                }),
-            ],
-        },
+                        keep_fnames: true
+                    }
+                })
+            ]
+        }
     };
 };
