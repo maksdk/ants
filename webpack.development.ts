@@ -1,10 +1,7 @@
-import * as webpack from 'webpack';
-import * as path from 'path';
+import path from 'path';
 
 import ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 module.exports = (env: { mode: 'development' | 'production' }) => {
     /** @type {import('webpack').Configuration} */
@@ -58,15 +55,6 @@ module.exports = (env: { mode: 'development' | 'production' }) => {
 
             new ForkTsCheckerNotifierWebpackPlugin({
                 skipSuccessful: true
-            }),
-
-            new MiniCssExtractPlugin({
-                filename: '[name].css'
-            }),
-
-            new webpack.DefinePlugin({
-                PRODUCTION: JSON.stringify(false),
-                VERSION: JSON.stringify('3.0.0') // TODO Update from package.json
             })
         ]
     };

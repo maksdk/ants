@@ -1,8 +1,4 @@
-import * as path from 'path';
-import * as webpack from 'webpack';
-
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 
 module.exports = (env: { mode: 'development' | 'production' }) => {
@@ -45,28 +41,6 @@ module.exports = (env: { mode: 'development' | 'production' }) => {
             filename: 'game.[hash].js',
             chunkFilename: 'game-library.[contenthash].js'
         },
-
-        plugins: [
-            new MiniCssExtractPlugin({
-                filename: '[name].[hash].css'
-            }),
-
-            new OptimizeCssAssetsPlugin({
-                assetNameRegExp: /\.css$/i,
-                cssProcessor: require('cssnano'),
-                cssProcessorPluginOptions: {
-                    preset: ['default', { discardComments: { removeAll: true } }]
-                },
-                canPrint: true
-            }),
-
-            new webpack.DefinePlugin({
-                PRODUCTION: JSON.stringify(true),
-                VERSION: JSON.stringify('3.0.0') // TODO Update from package.json
-            }),
-
-            new webpack.ProgressPlugin()
-        ],
 
         optimization: {
             minimize: true,
