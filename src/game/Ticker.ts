@@ -1,8 +1,6 @@
-type TickHook = (dt: number, totalTime: number) => void;
-
 export class Ticker {
     private app: PIXI.Application;
-    private list: { [name: string]: TickHook };
+    private list: { [name: string]: Data.TickHook };
 
     constructor(app: PIXI.Application) {
         this.app = app;
@@ -17,7 +15,7 @@ export class Ticker {
         return !!this.list[name];
     }
 
-    add(name: string, onTick: TickHook): void {
+    add(name: string, onTick: Data.TickHook): void {
         if (this.has(name)) {
             throw new Error(`Ticker: You are a little bastard, you can not add '${name}' twice!`);
         }

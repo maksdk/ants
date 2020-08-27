@@ -1,4 +1,4 @@
-declare namespace FSM {
+declare module FSM {
     export interface IStateMachine {
         target: { [key: string]: any };
         states: IState[];
@@ -18,7 +18,7 @@ declare namespace FSM {
     }
 }
 
-declare namespace Layer {
+declare module Layer {
     export interface IData {
         name: string;
         zIndex: number;
@@ -41,7 +41,7 @@ declare namespace Layer {
     }
 }
 
-declare namespace Parser {
+declare module Parser {
     export interface IParserRules {
         [key: string]: RegExp;
     }
@@ -60,7 +60,7 @@ declare namespace Parser {
     }
 }
 
-declare namespace Builder {
+declare module Builder {
     export type Types = "Container" | "Sprite" | "Text";
     export type Methods = "createContainer" | "createSprite" | "createText";
 
@@ -101,4 +101,20 @@ declare namespace Builder {
     export interface ITreeConfig extends IContainerConfig {
         children?: Array<ITextConfig | IContainerConfig | ISpriteConfig>;
     }
+}
+
+declare module Data {
+    export interface IResize {
+        game: {
+            width: number;
+            height: number;
+        };
+        viewport: {
+            width: number;
+            height: number;
+        }
+        isPortrait: boolean;
+    }
+    export type TickHook = (dt: number, totalTime: number) => void;
+    export type ResizeHook = (sizes: IResize) => void;
 }

@@ -1,4 +1,4 @@
-import { Container, Sprite, TextStyle, Text, Graphics } from "pixi.js";
+import { Container, Sprite, TextStyle, Text, Graphics } from 'pixi.js';
 
 export class UIBuilder {
     static modifiersList: string[];
@@ -46,7 +46,7 @@ export class UIBuilder {
         return sprite;
     }
 
-    static createText({ name, text = "", style = {}, modifiers }: Builder.ITextConfig): PIXI.Text {
+    static createText({ name, text = '', style = {}, modifiers }: Builder.ITextConfig): PIXI.Text {
         const txt = new Text(text, new TextStyle(style));
         this._useModifiers<Text>(txt, modifiers);
         txt.name = name;
@@ -68,7 +68,7 @@ export class UIBuilder {
         property: string,
         modifier: Builder.Modifier
     ): void {
-        if (typeof modifier !== "object") {
+        if (typeof modifier !== 'object') {
             //@ts-ignore
             target[property] = modifier;
         } else {
@@ -79,20 +79,20 @@ export class UIBuilder {
 }
 
 UIBuilder.methodsMap = {
-    Container: "createContainer",
-    Sprite: "createSprite",
-    Text: "createText",
+    Container: 'createContainer',
+    Sprite: 'createSprite',
+    Text: 'createText'
 };
 
 UIBuilder.modifiersList = [
     // basic DisplayObject props
-    "position",
-    "scale",
-    "width",
-    "height",
-    "alpha",
-    "zIndex",
-    "rotation",
+    'position',
+    'scale',
+    'width',
+    'height',
+    'alpha',
+    'zIndex',
+    'rotation',
     // for Sprite
-    "anchor",
+    'anchor'
 ];
