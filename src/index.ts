@@ -1,23 +1,19 @@
 import { AssetsPreloader } from '../libs/AssetsPreloader';
-import { Application, Sprite, Text } from 'pixi.js';
+import { Application } from 'pixi.js';
 import assets from '../assets';
 
 import { GameConfig } from './configs/GameConfig';
+import { Game } from './game/Game';
 const gameConfig = new GameConfig();
 const { application, gameCanvasId } = gameConfig;
 
 application.view = document.body.querySelector(gameCanvasId) as HTMLCanvasElement;
 const app: PIXI.Application = new Application(application);
+const game: Game = new Game(app);
 
 const onAssetsLoaded = () => {
-    const sprite = Sprite.from('kenny');
-    app.stage.addChild(sprite);
-
-    const title = new Text('They killed kenny!!!', { fontSize: 50, fill: 0xffffff, fontFamily: 'Coneria' });
-    app.stage.addChild(title);
-
-    const cartman = Sprite.from('cartman');
-    app.stage.addChild(cartman);
+    game.run();
+    game.resizeManager.resize();
 };
 
 const onAssetsLoadProgress = (percentProgress: number) => {
