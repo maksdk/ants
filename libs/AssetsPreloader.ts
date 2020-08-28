@@ -2,11 +2,12 @@ import { Application, utils } from 'pixi.js';
 import has from 'lodash/has';
 import FontFaceObserver from 'fontfaceobserver';
 
-type AssetKey = 'images' | 'fonts';
+type AssetKey = 'images' | 'fonts' | 'atlases';
 
 interface IAssets {
     images?: IAssetsItem[];
     fonts?: IAssetsItem[];
+    atlases?: IAssetsItem[];
 }
 
 interface IAssetsItem {
@@ -23,7 +24,7 @@ export class AssetsPreloader extends utils.EventEmitter {
     private loadersMap = {
         images: (loader: AssetsPreloader) => loader.loadImages(),
         fonts: (loader: AssetsPreloader) => loader.loadFonts(),
-        atlases: () => Promise.resolve()
+        atlases: (loader: AssetsPreloader) => loader.loadAtlases()
     };
     private onCompleteCb!: () => void;
     private onProgressCb!: (progress: number) => void;
@@ -43,6 +44,11 @@ export class AssetsPreloader extends utils.EventEmitter {
         onProgressCb: (progress: number) => void = (progress: number) => progress
     ): Promise<void> {
         const promises = Object.keys(this.assets).map((key: string) => this.loadersMap[key as AssetKey](this));
+
+        const loadedPromise: Promise<void> = new Promise((resolve) => {
+            this.app.loader.load(() => resolve());
+        });
+        promises.push(loadedPromise);
 
         this.onProgressCb = onProgressCb;
         this.onCompleteCb = onCompleteCb;
@@ -66,9 +72,21 @@ export class AssetsPreloader extends utils.EventEmitter {
 
         this.app.loader.onProgress.add(() => this.incrementProgress());
 
-        return new Promise((resolve) => {
-            this.app.loader.load(() => resolve());
+        return Promise.resolve();
+    }
+
+    private loadAtlases(): Promise<void> {
+        const { atlases = [] } = this.assets;
+
+        atlases.forEach(({ name, url }) => {
+            if (!has(this.app.loader.resources, name)) {
+                this.app.loader.add(name, url, this.options);
+            }
         });
+
+        this.app.loader.onProgress.add(() => this.incrementProgress());
+
+        return Promise.resolve();
     }
 
     private loadFonts(): Promise<void> {

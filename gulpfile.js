@@ -3,9 +3,10 @@ const del = require('del');
 const through2 = require('through2');
 const fs = require('fs');
 const texturePacker = require('gulp-free-tex-packer');
+const has = require('lodash/has');
 
 const basePath = 'assets/';
-const tempAtlassesPath = `${basePath}__temp_atlasses__`;
+const tempAtlasesPath = `${basePath}__temp_atlases__`;
 const writePath = './assets.ts';
 const imagesExts = ['jpg', 'jpeg', 'png', 'gif'];
 const fontsExts = ['ttf', 'otf'];
@@ -27,6 +28,21 @@ const getNameFromPath = (path) => {
 const fixPath = (path) => {
     return path.split('\\').join('/');
 };
+
+function isJson(name) {
+    return /.*\.json$/.test(name);
+}
+
+function isImage(name) {
+    return /.*\.png|jpg$/.test(name);
+}
+
+function getName(path) {
+    var name = path.split('.');
+    name.pop();
+    name = name.join('.');
+    return name;
+}
 
 const init = (done) => {
     assets = {};
@@ -82,7 +98,7 @@ gulp.task('assets:fonts', () => {
     );
 });
 
-gulp.task('assets:pack-atlases', () => {
+gulp.task('assets:atlases', () => {
     assets.atlases = [];
     return gulp
         .src(`${basePath}atlases/**/*.*`)
@@ -103,13 +119,38 @@ gulp.task('assets:pack-atlases', () => {
                 prependFolderName: true
             })
         )
-        .pipe(gulp.dest(tempAtlassesPath));
+        .pipe(gulp.dest(tempAtlasesPath))
+        .pipe(
+            through2.obj((file, enc, cb) => {
+                const files = fs.readdirSync(tempAtlasesPath);
+                const jsons = files.filter((name) => isJson(name));
+
+                jsons.forEach((jsonFileName) => {
+                    const content = JSON.parse(fs.readFileSync(`${tempAtlasesPath}/${jsonFileName}`, 'utf-8'));
+                    assets.images.forEach((image) => {
+                        if (has(content.frames, image.name)) {
+                            throw new Error(
+                                `The atlases folder and the images folder have the same name: "${image.name}"`
+                            );
+                        }
+                    });
+                });
+
+                assets.atlases = jsons.map((jsonFileName) => {
+                    return {
+                        name: getName(jsonFileName),
+                        url: `${tempAtlasesPath}/${jsonFileName}`
+                    };
+                });
+                cb(null);
+            })
+        );
 });
 
 gulp.task('clear', () => {
-    return del([tempAtlassesPath]);
+    return del([tempAtlasesPath]);
 });
 
 gulp.task('assets', (done) =>
-    gulp.series(init, 'clear', 'assets:pack-atlases', 'assets:images', 'assets:fonts', write)(done)
+    gulp.series(init, 'clear', 'assets:images', 'assets:atlases', 'assets:fonts', write)(done)
 );
