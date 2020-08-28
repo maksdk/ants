@@ -1,16 +1,14 @@
-import * as path from 'path';
+import path from 'path';
+import childProcess from 'child_process';
 
 import { merge } from 'webpack-merge';
 import { Configuration } from 'webpack';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 module.exports = (env: { mode: 'development' | 'production' }) => {
-    const developmentMode = env.mode === 'development';
-
     const config: Configuration = {
         entry: './src/index.ts',
 
@@ -18,22 +16,6 @@ module.exports = (env: { mode: 'development' | 'production' }) => {
             extensions: ['.ts', '.tsx', '.js', '.json']
         },
 
-        module: {
-            rules: [
-                {
-                    test: /\.css$/i,
-                    use: [
-                        {
-                            loader: MiniCssExtractPlugin.loader,
-                            options: {
-                                hmr: developmentMode
-                            }
-                        },
-                        'css-loader'
-                    ]
-                }
-            ]
-        },
         optimization: {
             splitChunks: {
                 chunks: 'all'
@@ -60,9 +42,17 @@ module.exports = (env: { mode: 'development' | 'production' }) => {
                         }
                     }
                 ]
-            })
+            }),
+            {
+                apply(compiler) {
+                    compiler.hooks.watchClose.tap('CustomCloseWatchPlugin', () => {
+                        childProcess.execSync('npm run "dev:close-watch"');
+                    });
+                }
+            }
         ]
     };
+
     const envConfig = require(path.resolve(__dirname, `./webpack.${env.mode}.ts`))(env);
 
     const mergedConfig = merge(config, envConfig);
