@@ -22,7 +22,8 @@ export class AssetsPreloader extends utils.EventEmitter {
     private totalItemsCount = 0;
     private loadersMap = {
         images: (loader: AssetsPreloader) => loader.loadImages(),
-        fonts: (loader: AssetsPreloader) => loader.loadFonts()
+        fonts: (loader: AssetsPreloader) => loader.loadFonts(),
+        atlases: () => Promise.resolve()
     };
     private onCompleteCb!: () => void;
     private onProgressCb!: (progress: number) => void;

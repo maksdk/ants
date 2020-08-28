@@ -2,6 +2,7 @@
 dist
 coverage
 assets.ts
+assets/__temp_atlasses__
 
 #node modules
 node_modules

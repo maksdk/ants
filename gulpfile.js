@@ -1,8 +1,11 @@
 const gulp = require('gulp');
+const del = require('del');
 const through2 = require('through2');
 const fs = require('fs');
+const texturePacker = require('gulp-free-tex-packer');
 
 const basePath = 'assets/';
+const tempAtlassesPath = `${basePath}__temp_atlasses__`;
 const writePath = './assets.ts';
 const imagesExts = ['jpg', 'jpeg', 'png', 'gif'];
 const fontsExts = ['ttf', 'otf'];
@@ -79,4 +82,34 @@ gulp.task('assets:fonts', () => {
     );
 });
 
-gulp.task('assets', (done) => gulp.series(init, 'assets:images', 'assets:fonts', write)(done));
+gulp.task('assets:pack-atlases', () => {
+    assets.atlases = [];
+    return gulp
+        .src(`${basePath}atlases/**/*.*`)
+        .pipe(
+            texturePacker({
+                textureName: 'atlas',
+                packer: 'OptimalPacker',
+                packerMethod: 'Automatic',
+                width: 2048,
+                height: 2048,
+                fixedSize: false,
+                padding: 2,
+                allowRotation: true,
+                detectIdentical: true,
+                allowTrim: true,
+                exporter: 'Pixi',
+                removeFileExtension: true,
+                prependFolderName: true
+            })
+        )
+        .pipe(gulp.dest(tempAtlassesPath));
+});
+
+gulp.task('clear', () => {
+    return del([tempAtlassesPath]);
+});
+
+gulp.task('assets', (done) =>
+    gulp.series(init, 'clear', 'assets:pack-atlases', 'assets:images', 'assets:fonts', write)(done)
+);
