@@ -51,11 +51,11 @@ export class Game {
         ui.addChild(kenny, title);
     }
 
-    update(): void {
+    public update(): void {
         /*do nothing here for now*/
     }
 
-    onResize(sizes: Data.IResize): void {
+    private onResize(sizes: Data.IResize): void {
         /*do nothing here for now*/
         const { game } = sizes;
         this.scene.position.set(game.width / 2, game.height / 2);

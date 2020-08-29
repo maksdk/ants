@@ -11,18 +11,18 @@ export class Ticker {
         this.app.ticker.add(this.onTick.bind(this));
     }
 
-    has(name: string): boolean {
+    public has(name: string): boolean {
         return this.list.has(name);
     }
 
-    add(name: string, onTick: Data.TickHook): void {
+    public add(name: string, onTick: Data.TickHook): void {
         if (this.list.has(name)) {
             throw new Error(`Ticker: You are a little bastard, you can not add '${name}' twice!`);
         }
         this.list.set(name, onTick);
     }
 
-    remove(name: string): void {
+    public remove(name: string): void {
         if (!this.list.has(name)) {
             throw new Error(`Ticker: You are a little bastard, the '${name}' does not exist in Ticker list!`);
         }

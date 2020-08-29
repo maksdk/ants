@@ -1,6 +1,6 @@
 export abstract class AbstractState implements FSM.IState {
-    name: string;
-    fsm: FSM.IStateMachine;
+    public name: string;
+    public fsm: FSM.IStateMachine;
 
     constructor(name: string, fsm: FSM.IStateMachine) {
         this.name = name;
@@ -11,7 +11,7 @@ export abstract class AbstractState implements FSM.IState {
 
     abstract onExitState(onFinish: () => void): void;
 
-    goToNextState(stateName: string) {
+    public goToNextState(stateName: string) {
         this.fsm.changeStateTo(stateName);
     }
 }

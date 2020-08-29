@@ -10,16 +10,16 @@ export class ResourcesParser implements Parser.IResourcesParser {
         };
     }
 
-    parseResources(resources: Parser.IParserInput): Parser.IParserResult {
+    public parseResources(resources: Parser.IParserInput): Parser.IParserResult {
         const keys: string[] = Object.keys(resources);
 
         return {
-            ...this._parseSprites(keys, resources),
-            ...this._parseSpritesheet(keys, resources)
+            ...this.parseSprites(keys, resources),
+            ...this.parseSpritesheet(keys, resources)
         };
     }
 
-    _parseSprites(keys: string[], resources: Parser.IParserInput): Parser.IParserResult {
+    private parseSprites(keys: string[], resources: Parser.IParserInput): Parser.IParserResult {
         return keys.reduce((acc: Parser.IParserResult, key: string) => {
             if (this.rules.img.test(resources[key].extension)) {
                 acc[key] = resources[key].texture;
@@ -28,7 +28,7 @@ export class ResourcesParser implements Parser.IResourcesParser {
         }, {});
     }
 
-    _parseSpritesheet(keys: string[], resources: Parser.IParserInput): Parser.IParserResult {
+    private parseSpritesheet(keys: string[], resources: Parser.IParserInput): Parser.IParserResult {
         return keys.reduce((acc: Parser.IParserResult, key: string) => {
             if (this.rules.json.test(resources[key].extension)) {
                 const { textures = [] } = resources[key];

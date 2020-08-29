@@ -13,25 +13,27 @@ export class ResizeManager {
         window.addEventListener('resize', this.resize);
     }
 
-    has(name: string): boolean {
+    public has(name: string): boolean {
         return this.list.has(name);
     }
 
-    add(name: string, onResize: Data.ResizeHook): void {
+    public add(name: string, onResize: Data.ResizeHook): void {
         if (this.list.has(name)) {
             throw new Error(`ResizeManager: You are a little bastard, you can not add '${name}' twice!`);
         }
         this.list.set(name, onResize);
     }
 
-    remove(name: string): void {
+    public remove(name: string): void {
         if (!this.list.has(name)) {
-            throw new Error(`ResizeManager: You are a little bastard, the '${name}' does not exist in Ticker list!`);
+            throw new Error(
+                `ResizeManager: You are a little bastard, the '${name}' does not exist in ResizeManager list!`
+            );
         }
         this.list.delete(name);
     }
 
-    resize(): void {
+    public resize(): void {
         const { innerHeight, innerWidth } = window;
         const { width, height } = this.baseSize;
 
