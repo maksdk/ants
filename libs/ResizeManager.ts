@@ -1,37 +1,41 @@
+import Data = Core.Data;
+
 export class ResizeManager {
     private app: PIXI.Application;
     private baseSize: { width: number; height: number };
-    private list: { [name: string]: Data.ResizeHook };
+    private list: Map<string, Data.ResizeHook>;
 
     constructor(app: PIXI.Application, baseSize: { width: number; height: number }) {
         this.app = app;
         this.baseSize = baseSize;
-        this.list = {};
+        this.list = new Map();
 
         this.resize = this.resize.bind(this);
 
         window.addEventListener('resize', this.resize);
     }
 
-    has(name: string): boolean {
-        return !!this.list[name];
+    public has(name: string): boolean {
+        return this.list.has(name);
     }
 
-    add(name: string, onResize: Data.ResizeHook): void {
-        if (this.has(name)) {
+    public add(name: string, onResize: Data.ResizeHook): void {
+        if (this.list.has(name)) {
             throw new Error(`ResizeManager: You are a little bastard, you can not add '${name}' twice!`);
         }
-        this.list[name] = onResize;
+        this.list.set(name, onResize);
     }
 
-    remove(name: string): void {
-        if (!this.has(name)) {
-            throw new Error(`ResizeManager: You are a little bastard, the '${name}' does not exist in Ticker list!`);
+    public remove(name: string): void {
+        if (!this.list.has(name)) {
+            throw new Error(
+                `ResizeManager: You are a little bastard, the '${name}' does not exist in ResizeManager list!`
+            );
         }
-        delete this.list[name];
+        this.list.delete(name);
     }
 
-    resize(): void {
+    public resize(): void {
         const { innerHeight, innerWidth } = window;
         const { width, height } = this.baseSize;
 
@@ -51,7 +55,7 @@ export class ResizeManager {
         this.app.view.style.width = `${viewport.width}px`;
         this.app.view.style.height = `${viewport.height}px`;
 
-        Object.values(this.list).forEach((onResize) =>
+        this.list.forEach((onResize) =>
             onResize({
                 game,
                 viewport,

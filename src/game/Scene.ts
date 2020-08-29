@@ -1,18 +1,20 @@
 import { AbstractLayer } from '../../libs/layer';
+import Layer = Core.Layer;
 
 class SceneLayer extends AbstractLayer {
-    resize(): void {
+    public resize(): void {
         /*do nothing here for now*/
     }
-    update(): void {
+    public update(): void {
         /*do nothing here for now*/
     }
-    cleanup(): void {
+    public cleanup(): void {
         /*do nothing here for now*/
     }
 }
 
-type LayersCollection = Record<'Background' | 'Game' | 'UI' | 'Transition', SceneLayer>;
+type LayersNames = 'Background' | 'Game' | 'UI' | 'Transition';
+type LayersCollection = Map<LayersNames, SceneLayer>;
 
 export class Scene extends AbstractLayer {
     private layers: LayersCollection;
@@ -21,26 +23,29 @@ export class Scene extends AbstractLayer {
         super(params);
 
         this.sortableChildren = true;
+        this.layers = new Map();
 
-        this.layers = {
-            Transition: this.addChild(new SceneLayer({ name: 'Transition', zIndex: 300, config: {} })),
-            Background: this.addChild(new SceneLayer({ name: 'Background', zIndex: 0, config: {} })),
-            Game: this.addChild(new SceneLayer({ name: 'Game', zIndex: 100, config: {} })),
-            UI: this.addChild(new SceneLayer({ name: 'UI', zIndex: 200, config: {} }))
-        };
+        this.layers.set('Transition', this.addChild(new SceneLayer({ name: 'Transition', zIndex: 300, config: {} })));
+        this.layers.set('Background', this.addChild(new SceneLayer({ name: 'Background', zIndex: 0, config: {} })));
+        this.layers.set('Game', this.addChild(new SceneLayer({ name: 'Game', zIndex: 100, config: {} })));
+        this.layers.set('UI', this.addChild(new SceneLayer({ name: 'UI', zIndex: 200, config: {} })));
     }
 
-    getLayer(name: keyof LayersCollection): SceneLayer {
-        return this.layers[name];
+    public getLayer(name: LayersNames): SceneLayer {
+        const layer = this.layers.get(name);
+        if (!layer) {
+            throw new Error(`Scene: You are a little bastard, the layer '${name}' does not exist in Scene list!`);
+        }
+        return layer;
     }
 
-    resize(): void {
+    public resize(): void {
         /*do nothing here for now*/
     }
-    update(): void {
+    public update(): void {
         /*do nothing here for now*/
     }
-    cleanup(): void {
+    public cleanup(): void {
         /*do nothing here for now*/
     }
 }

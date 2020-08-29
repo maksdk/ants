@@ -1,4 +1,5 @@
 import { AbstractLayer } from './AbstractLayer';
+import Layer = Core.Layer;
 
 export class DraggableLayer extends AbstractLayer implements Layer.IDraggableLayer {
     private isClicked: boolean;

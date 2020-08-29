@@ -1,8 +1,10 @@
 import { Model } from './Model';
 import { Scene } from './Scene';
-import { Ticker } from './Ticker';
+import { Ticker } from '../../libs/Ticker';
 import { ResizeManager } from '../../libs/ResizeManager';
 import { UIBuilder } from '../../libs/UIBuilder';
+
+import Data = Core.Data;
 
 export class Game {
     private app: PIXI.Application;
@@ -28,7 +30,6 @@ export class Game {
 
         const kenny = UIBuilder.createSprite({
             name: 'kenny',
-            type: 'Sprite',
             textureName: 'kenny',
             modifiers: {
                 anchor: { x: 0.5, y: 0.5 },
@@ -39,7 +40,6 @@ export class Game {
         const title = UIBuilder.createText({
             name: 'title',
             text: 'They killed kenny!!!',
-            type: 'Text',
             style: {
                 fontSize: 80,
                 fill: 0xffffff,
@@ -51,11 +51,11 @@ export class Game {
         ui.addChild(kenny, title);
     }
 
-    update(): void {
+    public update(): void {
         /*do nothing here for now*/
     }
 
-    onResize(sizes: Data.IResize): void {
+    private onResize(sizes: Data.IResize): void {
         /*do nothing here for now*/
         const { game } = sizes;
         this.scene.position.set(game.width / 2, game.height / 2);
