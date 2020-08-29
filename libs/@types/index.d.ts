@@ -98,7 +98,7 @@ declare module Core {
         export interface ITreeConfig {
             name: string;
             type: Types;
-            textureName: string;
+            textureName?: string;
             text?: string;
             style?: PIXI.TextStyle | object;
             modifiers?: IModifiers;
