@@ -98,9 +98,9 @@ declare module Core {
         export interface ITreeConfig {
             name: string;
             type: Types;
-            textureName?: string;
-            text?: string;
-            style?: PIXI.TextStyle | object;
+            textureName?: string;           //  for Sprites only, PIXI will get if from texture cache by name, like PIXI.Sprite.from(name) does
+            text?: string;                  // for Text
+            style?: PIXI.TextStyle | object; //  for Text
             modifiers?: IModifiers;
             children?: ITreeConfig[]
         }

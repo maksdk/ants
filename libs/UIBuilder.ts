@@ -24,6 +24,7 @@ export class UIBuilder {
     public static fromConfig(treeConfig: Builder.ITreeConfig[]): PIXI.Container[] {
         return treeConfig.map((config) => {
             const methodName: Builder.Methods = UIBuilder.methodsMap[config.type];
+            //@ts-ignore
             const el = UIBuilder[methodName](config);
             if (config.children) {
                 el.addChild(...UIBuilder.fromConfig(config.children));
