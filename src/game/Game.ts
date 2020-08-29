@@ -4,6 +4,8 @@ import { Ticker } from '../../libs/Ticker';
 import { ResizeManager } from '../../libs/ResizeManager';
 import { UIBuilder } from '../../libs/UIBuilder';
 
+import TWEEN from '@tweenjs/tween.js';
+
 import Data = Core.Data;
 
 export class Game {
@@ -37,6 +39,17 @@ export class Game {
             }
         });
 
+        new TWEEN.Tween({ angle: 1 })
+            .to({ angle: 360 }, 3000)
+            .onUpdate(({ angle }) => {
+                kenny.scale.x = Math.cos(angle / 20) * 2;
+                kenny.scale.y = Math.sin(angle / 25) * 2;
+                kenny.angle = angle;
+            })
+            .repeat(Infinity)
+            .yoyo(true)
+            .start(0);
+
         const title = UIBuilder.createText({
             name: 'title',
             text: 'They killed kenny!!!',
@@ -51,7 +64,8 @@ export class Game {
         ui.addChild(kenny, title);
     }
 
-    public update(): void {
+    public update(dt: number, totalTime: number): void {
+        TWEEN.update(totalTime);
         /*do nothing here for now*/
     }
 

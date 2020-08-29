@@ -9,7 +9,7 @@
         "allowSyntheticDefaultImports": true,
         "importsNotUsedAsValues": "preserve",
         "resolveJsonModule": true,
-        "types": ["pixi.js", "./libs/@types/"]
+        "types": ["pixi.js", "@tweenjs/tween.js","./libs/@types/"]
     },
     "include": ["src/**/*", "libs/**/*"]
 }
