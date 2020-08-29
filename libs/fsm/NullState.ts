@@ -1,4 +1,5 @@
 import { AbstractState } from "./AbstractState";
+import FSM = Core.FSM;
 
 export class NullState extends AbstractState {
     constructor(name: string, fsm: FSM.IStateMachine) {

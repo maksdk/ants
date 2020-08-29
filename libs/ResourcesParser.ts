@@ -1,3 +1,4 @@
+import Parser = Core.Parser;
 
 export class ResourcesParser implements Parser.IResourcesParser {
     rules: Parser.IParserRules;
@@ -32,8 +33,7 @@ export class ResourcesParser implements Parser.IResourcesParser {
         return keys.reduce((acc: Parser.IParserResult, key: string) => {
             if (this.rules.json.test(resources[key].extension)) {
                 const { textures = [] } = resources[key];
-                (<any>Object).entries(textures)
-                    //@ts-ignore
+                Object.entries(textures)
                     .forEach(([name, texture]) => (acc[name] = texture));
             }
             return acc

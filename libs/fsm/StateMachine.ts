@@ -1,4 +1,5 @@
 import { NullState } from "./NullState";
+import FSM = Core.FSM;
 
 export class StateMachine<T> implements FSM.IStateMachine {
     target: T;

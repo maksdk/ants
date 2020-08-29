@@ -1,4 +1,5 @@
 import { AbstractLayer } from '../../libs/layer';
+import Layer = Core.Layer;
 
 class SceneLayer extends AbstractLayer {
     public resize(): void {

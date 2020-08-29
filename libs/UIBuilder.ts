@@ -1,4 +1,5 @@
 import { Container, Sprite, TextStyle, Text, Graphics } from 'pixi.js';
+import Builder = Core.Builder;
 
 export class UIBuilder {
     public static modifiersList: string[];
@@ -25,7 +26,6 @@ export class UIBuilder {
             const methodName: Builder.Methods = UIBuilder.methodsMap[config.type];
             const el = UIBuilder[methodName](config);
             if (config.children) {
-                //@ts-ignore
                 el.addChild(...UIBuilder.fromConfig(config.children));
             }
             return el;

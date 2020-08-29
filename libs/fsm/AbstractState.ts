@@ -1,3 +1,5 @@
+import FSM = Core.FSM;
+
 export abstract class AbstractState implements FSM.IState {
     public name: string;
     public fsm: FSM.IStateMachine;

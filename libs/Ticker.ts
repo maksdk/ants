@@ -1,3 +1,5 @@
+import Data = Core.Data;
+
 export class Ticker {
     private app: PIXI.Application;
     private list: Map<string, Data.TickHook>;

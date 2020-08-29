@@ -1,3 +1,5 @@
+import Data = Core.Data;
+
 export class ResizeManager {
     private app: PIXI.Application;
     private baseSize: { width: number; height: number };

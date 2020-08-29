@@ -4,6 +4,8 @@ import { Ticker } from '../../libs/Ticker';
 import { ResizeManager } from '../../libs/ResizeManager';
 import { UIBuilder } from '../../libs/UIBuilder';
 
+import Data = Core.Data;
+
 export class Game {
     private app: PIXI.Application;
     public model: Model;
@@ -28,7 +30,6 @@ export class Game {
 
         const kenny = UIBuilder.createSprite({
             name: 'kenny',
-            type: 'Sprite',
             textureName: 'kenny',
             modifiers: {
                 anchor: { x: 0.5, y: 0.5 },
@@ -39,7 +40,6 @@ export class Game {
         const title = UIBuilder.createText({
             name: 'title',
             text: 'They killed kenny!!!',
-            type: 'Text',
             style: {
                 fontSize: 80,
                 fill: 0xffffff,
