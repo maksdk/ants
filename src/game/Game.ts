@@ -1,6 +1,6 @@
 import { Model } from './Model';
 import { Scene } from './Scene';
-import { Ticker } from './Ticker';
+import { Ticker } from '../../libs/Ticker';
 import { ResizeManager } from '../../libs/ResizeManager';
 import { UIBuilder } from '../../libs/UIBuilder';
 

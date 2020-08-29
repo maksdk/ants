@@ -1,10 +1,10 @@
 export class Ticker {
     private app: PIXI.Application;
-    private list: { [name: string]: Data.TickHook };
+    private list: Map<string, Data.TickHook>;
 
     constructor(app: PIXI.Application) {
         this.app = app;
-        this.list = {};
+        this.list = new Map();
 
         this.onTick = this.onTick.bind(this);
 
@@ -12,24 +12,26 @@ export class Ticker {
     }
 
     has(name: string): boolean {
-        return !!this.list[name];
+        return this.list.has(name);
     }
 
     add(name: string, onTick: Data.TickHook): void {
-        if (this.has(name)) {
+        if (this.list.has(name)) {
             throw new Error(`Ticker: You are a little bastard, you can not add '${name}' twice!`);
         }
-        this.list[name] = onTick;
+        this.list.set(name, onTick);
     }
 
     remove(name: string): void {
-        if (!this.has(name)) {
+        if (!this.list.has(name)) {
             throw new Error(`Ticker: You are a little bastard, the '${name}' does not exist in Ticker list!`);
         }
-        delete this.list[name];
+        this.list.delete(name);
     }
 
     private onTick(dt: number): void {
-        Object.values(this.list).forEach((onTick) => onTick(dt, this.app.ticker.lastTime));
+        this.list.forEach((onTick) => {
+            onTick(dt, this.app.ticker.lastTime);
+        });
     }
 }
