@@ -13,7 +13,7 @@ export abstract class AbstractState implements FSM.IState {
 
     abstract onExitState(onFinish: () => void): void;
 
-    public goToNextState(stateName: string) {
+    public goToNextState(stateName: string): void {
         this.fsm.changeStateTo(stateName);
     }
 }
