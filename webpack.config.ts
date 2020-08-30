@@ -7,13 +7,20 @@ import { Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import TSConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 module.exports = (env: { mode: 'development' | 'production' }) => {
     const config: Configuration = {
         entry: './src/index.ts',
 
         resolve: {
-            extensions: ['.ts', '.tsx', '.js', '.json']
+            extensions: ['.ts', '.tsx', '.js', '.json'],
+            modules: ['node_modules'],
+            plugins: [
+                new TSConfigPathsPlugin({
+                    configFile: path.resolve(__dirname, 'tsconfig.json')
+                })
+            ]
         },
 
         optimization: {
