@@ -1,7 +1,7 @@
-declare module Core {
+declare namespace Core {
     export namespace FSM {
         export interface IStateMachine {
-            target: { [key: string]: any };
+            target: unknown;
             states: IState[];
             currentState?: IState;
             previousState?: IState;
@@ -23,13 +23,13 @@ declare module Core {
         export interface IData {
             name: string;
             zIndex: number;
-            config: { [key: string]: any };
+            config: Record<string, unknown>;
         }
 
         export interface ILayer {
             name: string;
             zIndex: number;
-            config: { [key: string]: any };
+            config: Record<string, unknown>;
         }
 
         export interface IDraggable extends IData {
@@ -62,16 +62,16 @@ declare module Core {
     }
 
     export namespace Builder {
-        export type Types = "Container" | "Sprite" | "Text";
-        export type Methods = "createContainer" | "createSprite" | "createText";
+        export type Types = 'Container' | 'Sprite' | 'Text';
+        export type Methods = 'createContainer' | 'createSprite' | 'createText';
 
         export interface IDictionaryMethods {
-            "Container": "createContainer";
-            "Sprite": "createSprite";
-            "Text": "createText";
+            Container: 'createContainer';
+            Sprite: 'createSprite';
+            Text: 'createText';
         }
 
-        export type Modifier = Object | string | number;
+        export type Modifier = Record<string, unknown> | string | number;
 
         export interface IModifiers {
             [key: string]: Modifier;
@@ -91,18 +91,18 @@ declare module Core {
         export interface ITextConfig {
             name: string;
             text?: string;
-            style?: PIXI.TextStyle | object;
+            style?: PIXI.TextStyle | Record<string, unknown>;
             modifiers?: IModifiers;
         }
 
         export interface ITreeConfig {
             name: string;
             type: Types;
-            textureName?: string;           //  for Sprites only, PIXI will get if from texture cache by name, like PIXI.Sprite.from(name) does
-            text?: string;                  // for Text
-            style?: PIXI.TextStyle | object; //  for Text
+            textureName?: string; //  for Sprites only, PIXI will get if from texture cache by name, like PIXI.Sprite.from(name) does
+            text?: string; // for Text
+            style?: PIXI.TextStyle | Record<string, unknown>; //  for Text
             modifiers?: IModifiers;
-            children?: ITreeConfig[]
+            children?: ITreeConfig[];
         }
     }
 
@@ -115,18 +115,10 @@ declare module Core {
             viewport: {
                 width: number;
                 height: number;
-            }
+            };
             isPortrait: boolean;
         }
         export type TickHook = (dt: number, totalTime: number) => void;
         export type ResizeHook = (sizes: IResize) => void;
     }
 }
-
-
-
-
-
-
-
-
