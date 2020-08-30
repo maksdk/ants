@@ -1,4 +1,5 @@
 import { NullState } from "./NullState";
+import FSM = Core.FSM;
 
 export class StateMachine<T> implements FSM.IStateMachine {
     target: T;
@@ -13,7 +14,7 @@ export class StateMachine<T> implements FSM.IStateMachine {
         this.previousState = undefined;
     }
 
-    changeStateTo(name: string): void {
+    public changeStateTo(name: string): void {
         const onExitFinished = (): void => {
             const newState = this.getStateByName(name);
             newState.onEnterState();
@@ -27,14 +28,14 @@ export class StateMachine<T> implements FSM.IStateMachine {
         }
     }
 
-    registerStates(states: FSM.IState | FSM.IState[]): void {
+    public registerStates(states: FSM.IState | FSM.IState[]): void {
         if (!Array.isArray(states)) {
             states = [states];
         }
         states.forEach((state) => this.states.push(state));
     }
 
-    getStateByName(name: string): FSM.IState {
+    public getStateByName(name: string): FSM.IState {
         const state = this.states.find((state) => state.name === name);
         if (!state) {
             return new NullState(name, this);
@@ -42,7 +43,7 @@ export class StateMachine<T> implements FSM.IStateMachine {
         return state;
     }
 
-    swapStates(newState: FSM.IState): void {
+    private swapStates(newState: FSM.IState): void {
         this.previousState = this.currentState;
         this.currentState = newState;
         StateMachine.log(this.currentState, this.previousState);

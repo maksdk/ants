@@ -1,27 +1,27 @@
-
-import { AbstractLayer } from "./AbstractLayer";
+import { AbstractLayer } from './AbstractLayer';
+import Layer = Core.Layer;
 
 export class DraggableLayer extends AbstractLayer implements Layer.IDraggableLayer {
-    private _isClicked: boolean
-    private _pointersId: Array<number>;
-    private _viewPortSizes: { width: number; height: number };
-    private _pointerStartPos: { x: number; y: number };
-    private _moveBy: { dx: number; dy: number };
+    private isClicked: boolean;
+    private pointersId: Array<number>;
+    private viewPortSizes: { width: number; height: number };
+    private pointerStartPos: { x: number; y: number };
+    private moveBy: { dx: number; dy: number };
 
     constructor({ viewPortSizes, ...layerData }: Layer.IDraggable) {
         super(layerData);
 
-        this._isClicked = false;
-        this._pointersId = [];
-        this._viewPortSizes = viewPortSizes;
+        this.isClicked = false;
+        this.pointersId = [];
+        this.viewPortSizes = viewPortSizes;
 
-        this._pointerStartPos = { x: 0, y: 0 };
-        this._moveBy = { dx: 0, dy: 0 };
+        this.pointerStartPos = { x: 0, y: 0 };
+        this.moveBy = { dx: 0, dy: 0 };
 
-        this.on("pointerdown", this._onPointerDown, this);
-        this.on("pointermove", this._onPointerMove, this);
-        this.on("pointerup", this._onPointerUp, this);
-        this.on("pointerupoutside", this._onPointerUp, this);
+        this.on('pointerdown', this.onPointerDown, this);
+        this.on('pointermove', this.onPointerMove, this);
+        this.on('pointerup', this.onPointerUp, this);
+        this.on('pointerupoutside', this.onPointerUp, this);
     }
 
     /**
@@ -38,50 +38,50 @@ export class DraggableLayer extends AbstractLayer implements Layer.IDraggableLay
         this.interactive = false;
     }
 
-    _onPointerDown({ data }: PIXI.InteractionEvent): void {
-        if (this._isClicked) {
+    private onPointerDown({ data }: PIXI.InteractionEvent): void {
+        if (this.isClicked) {
             return;
         }
 
-        this._pointersId.push(data.pointerId);
-        this._isClicked = true;
+        this.pointersId.push(data.pointerId);
+        this.isClicked = true;
 
-        this._pointerStartPos = data.getLocalPosition(this);
+        this.pointerStartPos = data.getLocalPosition(this);
     }
 
-    _onPointerMove({ data }: PIXI.InteractionEvent): void {
-        if (!this._isClicked) {
+    private onPointerMove({ data }: PIXI.InteractionEvent): void {
+        if (!this.isClicked) {
             return;
         }
 
-        this._calculateMove(data);
+        this.calculateMove(data);
     }
 
-    _onPointerUp({ data }: PIXI.InteractionEvent): void {
-        if (this._pointersId.indexOf(data.pointerId) !== -1) {
+    private onPointerUp({ data }: PIXI.InteractionEvent): void {
+        if (this.pointersId.indexOf(data.pointerId) !== -1) {
             return;
         }
 
-        this._pointersId = [];
-        this._isClicked = false;
+        this.pointersId = [];
+        this.isClicked = false;
     }
 
-    _calculateMove(data: PIXI.InteractionData): void {
+    private calculateMove(data: PIXI.InteractionData): void {
         const endPos = data.getLocalPosition(this);
-        this._moveBy = {
-            dx: endPos.x - this._pointerStartPos.x,
-            dy: endPos.y - this._pointerStartPos.y
-        }
+        this.moveBy = {
+            dx: endPos.x - this.pointerStartPos.x,
+            dy: endPos.y - this.pointerStartPos.y
+        };
     }
 
-    _move() {
+    private move() {
         const { x, y } = this.position;
-        const { width, height } = this._viewPortSizes;
+        const { width, height } = this.viewPortSizes;
         const bounds = this.getLocalBounds();
 
-        const newX = x + this._moveBy.dx;
-        const newY = y + this._moveBy.dy;
-        this._moveBy = { dx: 0, dy: 0 };
+        const newX = x + this.moveBy.dx;
+        const newY = y + this.moveBy.dy;
+        this.moveBy = { dx: 0, dy: 0 };
 
         const marginW = (bounds.width - width) / 2;
         const marginH = (bounds.height - height) / 2;
@@ -92,11 +92,15 @@ export class DraggableLayer extends AbstractLayer implements Layer.IDraggableLay
         );
     }
 
-    update(dt: number): void {
-        this._move();
+    update(): void {
+        this.move();
     }
 
-    resize(sizes: { [key: string]: number }): void { };
+    resize(): void {
+        // do notheing
+    }
 
-    cleanup(): void { };
+    cleanup(): void {
+        // do notheing
+    }
 }
