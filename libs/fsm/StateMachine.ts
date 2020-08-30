@@ -1,8 +1,8 @@
-import { NullState } from "./NullState";
+import { NullState } from './NullState';
 import FSM = Core.FSM;
 
 export class StateMachine<T> implements FSM.IStateMachine {
-    target: T;
+    target: unknown;
     states: FSM.IState[];
     currentState?: FSM.IState;
     previousState?: FSM.IState;
@@ -54,7 +54,7 @@ export class StateMachine<T> implements FSM.IStateMachine {
             `%c State was change!
             previous state: ${previousState && previousState.name}
             current state: ${currState && currState.name}`,
-            "color: white; background: black; font-size: 15px"
+            'color: white; background: black; font-size: 15px'
         );
     }
 }

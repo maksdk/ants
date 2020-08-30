@@ -5,9 +5,9 @@ export class ResourcesParser implements Parser.IResourcesParser {
 
     constructor() {
         this.rules = {
-            json: new RegExp(/json$/, "i"),
-            json_img: new RegExp(/_image*$/, "i"),
-            img: new RegExp(/(jpg|jpeg|png)$/, "i")
+            json: new RegExp(/json$/, 'i'),
+            json_img: new RegExp(/_image*$/, 'i'),
+            img: new RegExp(/(jpg|jpeg|png)$/, 'i')
         };
     }
 
@@ -25,7 +25,7 @@ export class ResourcesParser implements Parser.IResourcesParser {
             if (this.rules.img.test(resources[key].extension)) {
                 acc[key] = resources[key].texture;
             }
-            return acc
+            return acc;
         }, {});
     }
 
@@ -33,10 +33,9 @@ export class ResourcesParser implements Parser.IResourcesParser {
         return keys.reduce((acc: Parser.IParserResult, key: string) => {
             if (this.rules.json.test(resources[key].extension)) {
                 const { textures = [] } = resources[key];
-                Object.entries(textures)
-                    .forEach(([name, texture]) => (acc[name] = texture));
+                Object.entries(textures).forEach(([name, texture]) => (acc[name] = texture));
             }
-            return acc
+            return acc;
         }, {});
     }
 }
