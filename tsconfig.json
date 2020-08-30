@@ -9,7 +9,14 @@
         "allowSyntheticDefaultImports": true,
         "importsNotUsedAsValues": "preserve",
         "resolveJsonModule": true,
-        "types": ["pixi.js", "@tweenjs/tween.js","./libs/@types/"]
+        "types": ["pixi.js", "@tweenjs/tween.js", "./libs/@types/"],
+        "baseUrl": ".",
+        "paths": {
+            "@libs/*": ["libs/*"],
+            "@game/*": ["src/game/*"],
+            "@config/*": ["src/configs/*"],
+            "@assets/*": ["assets.ts"]
+        }
     },
     "include": ["src/**/*", "libs/**/*"]
 }
