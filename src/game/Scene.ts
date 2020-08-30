@@ -25,18 +25,17 @@ export class Scene extends AbstractLayer {
         this.sortableChildren = true;
         this.layers = new Map();
 
-        this.layers.set('Transition', this.addChild(new SceneLayer({ name: 'Transition', zIndex: 300, config: {} })));
         this.layers.set('Background', this.addChild(new SceneLayer({ name: 'Background', zIndex: 0, config: {} })));
         this.layers.set('Game', this.addChild(new SceneLayer({ name: 'Game', zIndex: 100, config: {} })));
         this.layers.set('UI', this.addChild(new SceneLayer({ name: 'UI', zIndex: 200, config: {} })));
+        this.layers.set('Transition', this.addChild(new SceneLayer({ name: 'Transition', zIndex: 300, config: {} })));
     }
 
     public getLayer(name: LayersNames): SceneLayer {
-        const layer = this.layers.get(name);
-        if (!layer) {
+        if (!this.layers.has(name)) {
             throw new Error(`Scene: You are a little bastard, the layer '${name}' does not exist in Scene list!`);
         }
-        return layer;
+        return this.layers.get(name) as SceneLayer;
     }
 
     public resize(): void {
