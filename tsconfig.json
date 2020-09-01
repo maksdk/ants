@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "esnext",
+        "target": "es2018",
         "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
         "lib": ["dom", "es2019"],
         "strict": true,
@@ -8,14 +8,22 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "importsNotUsedAsValues": "preserve",
+        "moduleResolution": "node", // Search under node_modules for non-relative imports.
+        "allowJs": true, // Process & infer types from .js files.
+        "noEmit": true, // Don’t emit; allow Babel to transform files.
+        "isolatedModules": true, // Disallow features that require cross-file information for emit.
+        "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
+        "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
         "resolveJsonModule": true,
+        "strictPropertyInitialization": false,
         "types": ["pixi.js", "@tweenjs/tween.js", "./libs/@types/"],
         "baseUrl": ".",
         "paths": {
             "@libs/*": ["libs/*"],
             "@game/*": ["src/game/*"],
             "@config/*": ["src/configs/*"],
-            "@assets/*": ["assets.ts"]
+            "@assets": ["assets.ts"],
+            "@fsm/*": ["src/fsm/*"]
         }
     },
     "include": ["src/**/*", "libs/**/*"]
