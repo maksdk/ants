@@ -31,9 +31,9 @@ export class Ticker {
         this.list.delete(name);
     }
 
-    private onTick(dt: number): void {
+    private onTick(): void {
         this.list.forEach((onTick) => {
-            onTick(dt, this.app.ticker.lastTime);
+            onTick(this.app.ticker.elapsedMS, this.app.ticker.lastTime);
         });
     }
 }
