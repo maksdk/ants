@@ -1,4 +1,4 @@
-export default [
+export const matrix = [
     [
         0,
         0,
