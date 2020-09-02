@@ -23,7 +23,10 @@
             "@game/*": ["src/game/*"],
             "@config/*": ["src/configs/*"],
             "@assets": ["assets.ts"],
-            "@fsm/*": ["src/fsm/*"]
+            "@fsm/*": ["src/game/fsm/*"],
+            "@entities/*": ["src/game/entities/*"],
+            "@systems/*": ["src/game/systems/*"],
+            "@components/*": ["src/game/components/*"]
         }
     },
     "include": ["src/**/*", "libs/**/*"]
