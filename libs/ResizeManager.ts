@@ -5,6 +5,9 @@ export class ResizeManager {
     private baseSize: { width: number; height: number };
     private list: Map<string, Data.ResizeHook>;
 
+    private gw = 0;
+    private gh = 0;
+
     constructor(app: PIXI.Application, baseSize: { width: number; height: number }) {
         this.app = app;
         this.baseSize = baseSize;
@@ -55,6 +58,9 @@ export class ResizeManager {
         this.app.view.style.width = `${viewport.width}px`;
         this.app.view.style.height = `${viewport.height}px`;
 
+        this.gw = game.width;
+        this.gh = game.height;
+
         this.list.forEach((onResize) =>
             onResize({
                 game,
@@ -62,5 +68,13 @@ export class ResizeManager {
                 isPortrait
             })
         );
+    }
+
+    public get width(): number {
+        return this.gw;
+    }
+
+    public get height(): number {
+        return this.gh;
     }
 }
