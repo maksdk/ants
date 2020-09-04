@@ -46,7 +46,7 @@ export class AntEntity extends BaseEntity {
         const sprite = Sprite.from('ant');
         sprite.tint = 0x0000ff;
         sprite.anchor.set(0.5);
-        sprite.scale.set(0.5);
+        sprite.scale.set(0.35);
         this.addChild(sprite);
     }
 }
@@ -57,7 +57,7 @@ export class AntSoldierEntity extends BaseEntity {
         const sprite = Sprite.from('ant');
         sprite.tint = 0x000000;
         sprite.anchor.set(0.5);
-        sprite.scale.set(0.7);
+        sprite.scale.set(0.5);
         this.addChild(sprite);
     }
 }
