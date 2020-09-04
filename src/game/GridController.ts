@@ -1,4 +1,10 @@
 import { AStarFinder, DiagonalMovement, Grid, Util } from 'pathfinding';
+import { randomInt } from '@game/helpers';
+
+interface IGridCell {
+    x: number;
+    y: number;
+}
 
 export class GridController {
     private finder: AStarFinder;
@@ -18,6 +24,18 @@ export class GridController {
 
     public findSmoothPath(fx: number, fy: number, tx: number, ty: number): number[][] {
         return Util.smoothenPath(this.grid, this.findPath(fx, fy, tx, ty));
+    }
+
+    public findRandomPathInArea(fx: number, fy: number, area: { x: number; y: number }[]): IGridCell[] {
+        if (!this.grid.isInside(fx, fy)) {
+            throw new Error(`Points: "x: ${fx}" and "y: ${fy}" is not inside of Grid !!!`);
+        }
+
+        const randomIndex = randomInt(0, area.length - 1);
+        const randomCell = area[randomIndex];
+        const path = this.findSmoothPath(fx, fy, randomCell.x, randomCell.y);
+
+        return path.map(([x, y]) => ({ x, y }));
     }
 
     public getFreeNeighbors(fx: number, fy: number): { x: number; y: number }[] | never {

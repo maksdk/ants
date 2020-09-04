@@ -13,3 +13,7 @@ export function distance(p0: Point, p1: Point): number {
     const dy = p1.y - p0.y;
     return Math.sqrt(dx * dx + dy * dy);
 }
+
+export function randomInt(min: number, max: number): number {
+    return Math.floor(min + Math.random() * (max - min + 1));
+}
