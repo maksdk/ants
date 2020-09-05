@@ -19,6 +19,7 @@
         "types": ["pixi.js", "@tweenjs/tween.js", "./libs/@types/"],
         "baseUrl": ".",
         "paths": {
+            "@math": ["math-threejs/*"],
             "@libs/*": ["libs/*"],
             "@game/*": ["src/game/*"],
             "@config/*": ["src/configs/*"],
@@ -29,5 +30,6 @@
             "@components/*": ["src/game/components/*"]
         }
     },
-    "include": ["src/**/*", "libs/**/*"]
+    "include": ["src/**/*", "libs/**/*"],
+    "exclude": ["math-threejs"]
 }

@@ -4,6 +4,9 @@ coverage
 assets.ts
 assets/__temp_atlases__
 
+#three js
+math-threejs
+
 #node modules
 node_modules
 
