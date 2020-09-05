@@ -1,5 +1,6 @@
 import { Container, Point } from 'pixi.js';
 import { Component, Types } from 'ecsy';
+import { Vector2, Path } from 'math-threejs';
 
 export interface ISoldierComponent {
     object: Container;
@@ -16,21 +17,21 @@ SoldierComponent.schema = {
     }
 };
 
-export interface IMovingComponent {
+export interface IMovementComponent {
     start: Point;
     end: Point;
     progress: number;
     speed: number;
 }
 
-export class MovingComponent<C> extends Component<C> {
+export class MovementComponent<C> extends Component<C> {
     public start: Point = new Point();
     public end: Point = new Point();
     public progress = 0;
     public speed = 20;
 }
 
-MovingComponent.schema = {
+MovementComponent.schema = {
     start: {
         type: Types.Ref,
         default: new Point()
@@ -125,6 +126,60 @@ GuardFollowingComponent.schema = {
     end: {
         type: Types.Ref,
         default: new Point()
+    },
+    speed: {
+        type: Types.Number,
+        default: 10
+    },
+    progress: {
+        type: Types.Number,
+        default: 0
+    }
+};
+
+export interface IPathFindingComponent {
+    start: Vector2;
+    end: Vector2;
+}
+
+export class PathFindingComponent<C> extends Component<C> {
+    public start: Vector2 = new Vector2();
+    public end: Vector2 = new Vector2();
+}
+
+PathFindingComponent.schema = {
+    start: {
+        type: Types.Ref,
+        default: new Vector2()
+    },
+    end: {
+        type: Types.Ref,
+        default: new Vector2()
+    }
+};
+
+export interface IPathMovingComponent {
+    path: Path;
+    length: number;
+    speed: number;
+    progress: number;
+}
+
+export class PathMovingComponent<C> extends Component<C> {
+    public path: Path = new Path();
+    public length = 0;
+    public speed = 10;
+    public progress = 0;
+}
+
+PathMovingComponent.schema = {
+    path: {
+        type: Types.Ref,
+        default: new Path()
+    },
+    length: {
+        type: Types.Number,
+        default: 0
     },
     speed: {
         type: Types.Number,

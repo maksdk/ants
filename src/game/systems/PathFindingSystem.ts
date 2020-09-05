@@ -1,5 +1,6 @@
-import { AStarFinder, DiagonalMovement, Grid, Util } from 'pathfinding';
 import { System, World } from 'ecsy';
+import { Vector2, Path } from 'math-threejs';
+import { AStarFinder, DiagonalMovement, Grid, Util } from 'pathfinding';
 import { randomInt } from '@game/helpers';
 import { PathFindingComponent, IPathFindingComponent, PathMovingComponent } from '@game/components';
 
@@ -17,7 +18,11 @@ export class PathFindingSystem extends System {
         this.grid = new Grid(matrix);
 
         this.finder = new AStarFinder({
-            diagonalMovement: DiagonalMovement.Never
+            // diagonalMovement: DiagonalMovement.OnlyWhenNoObstacles
+            // TODO: данные свойства - depracated. Найти новый pathfinding
+            // @ts-ignore
+            allowDiagonal: true,
+            dontCrossCorners: true
         });
 
         this.cellW = cellW;
@@ -35,12 +40,24 @@ export class PathFindingSystem extends System {
             const path = this.findSmoothPath(fromIndex.x, fromIndex.y, toIndex.x, toIndex.y);
             const coordPath = this.toCoord(path);
 
-            entity.removeComponent(PathFindingComponent);
+            const pathCurve = new Path(this.toVec2(coordPath));
+            const pathLenght = pathCurve.getLength();
+
+            if (entity.hasComponent(PathMovingComponent)) {
+                entity.removeComponent(PathMovingComponent);
+            }
 
             entity.addComponent(PathMovingComponent, {
-                path: coordPath
+                path: pathCurve,
+                length: pathLenght
             });
+
+            entity.removeComponent(PathFindingComponent);
         });
+    }
+
+    private toVec2(paths: { x: number; y: number }[]): Vector2[] {
+        return paths.map(({ x, y }) => new Vector2(x, y));
     }
 
     private findSmoothPath(fx: number, fy: number, tx: number, ty: number): IGridPath[] {
@@ -104,7 +121,10 @@ export class PathFindingSystem extends System {
     }
 
     private toCoord(path: IGridPath[]): { x: number; y: number }[] {
-        return path.map(({ x, y }) => ({ x: x * this.cellW, y: y * this.cellH }));
+        return path.map(({ x, y }) => ({
+            x: x * this.cellW + this.cellW * 0.5,
+            y: y * this.cellH + this.cellH * 0.5
+        }));
     }
 
     private adaptPath(path: number[][]): IGridPath[] {

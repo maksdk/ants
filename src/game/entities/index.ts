@@ -16,6 +16,13 @@ export class BaseEntity extends Container {
         this.entity.addComponent(component, values);
     }
 
+    public getComponent<C extends Component<unknown>>(
+        Component: ComponentConstructor<C>,
+        includeRemoved?: boolean
+    ): Readonly<C> | undefined {
+        return this.entity.getComponent(Component, includeRemoved);
+    }
+
     public getMutableComponent<C extends Component<unknown>>(component: ComponentConstructor<C>): C | undefined {
         return this.entity.getMutableComponent(component);
     }
