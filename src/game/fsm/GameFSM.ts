@@ -1,3 +1,4 @@
+import { Model } from '@models/Model';
 import { World } from 'ecsy';
 import { Scene } from '@game/Scene';
 import { Game } from '@game/Game';
@@ -10,6 +11,7 @@ export class GameFSM {
     public loader!: AssetsPreloader;
     public scene!: Scene;
     public world!: World;
+    public model!: Model;
     public resizeManager!: ResizeManager;
     private currentState!: BaseState;
     private game: Game;
@@ -23,6 +25,7 @@ export class GameFSM {
         this.scene = this.game.scene;
         this.world = this.game.world;
         this.resizeManager = this.game.resizeManager;
+        this.model = this.game.model;
         this.setState(PreloadingState);
     }
 

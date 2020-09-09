@@ -1,12 +1,14 @@
 import TWEEN from '@tweenjs/tween.js';
 import { World } from 'ecsy';
-import { Model } from '@game/Model';
 import { Scene } from '@game/Scene';
 import { Ticker } from '@libs/Ticker';
 import { ResizeManager } from '@libs/ResizeManager';
 import { AssetsPreloader } from '@libs/AssetsPreloader';
 import { GameFSM } from '@fsm/GameFSM';
 import assets from '@assets';
+import { UserModel } from '@models/UserModel';
+import { GameModel } from '@models/GameModel';
+import { Model } from '@models/Model';
 
 import Data = Core.Data;
 
@@ -22,20 +24,32 @@ export class Game {
 
     constructor(app: PIXI.Application) {
         this.app = app;
+
         this.model = new Model();
+        this.model.user = new UserModel();
+        this.model.game = new GameModel();
+
         this.ticker = new Ticker(this.app);
+
         this.scene = new Scene({ name: 'RootScene', zIndex: 0, config: {} });
+
         this.resizeManager = new ResizeManager(this.app, { width: 900, height: 900 });
+
         this.loader = new AssetsPreloader(this.app, assets);
+
         this.world = new World();
+
         this.fsm = new GameFSM(this);
     }
 
     public start(): void {
         this.app.stage.addChild(this.scene);
+
         this.ticker.add('Game', this.update.bind(this));
+
         this.resizeManager.add('Game', this.onResize.bind(this));
         this.resizeManager.resize();
+
         this.fsm.start();
     }
 
